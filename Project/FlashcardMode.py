@@ -86,7 +86,7 @@ class FlashcardMode:
         self.qs_for_set.pop(0)
         self.current_question += 1
         self.showing_answer = False
-        if self.current_question < len(quiz_data):
+        if len(self.qs_for_set)>0:
             self.show_flashcard()
         else:
             self.hide_buttons()
