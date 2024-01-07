@@ -3,8 +3,9 @@ from tkinter import ttk
 import random
 from quiz_data import quiz_data
 
+
 class NormalMode:
-    def __init__(self, rootinit, num_questions):
+    def __init__(self, rootinit, num_questions, chosen_set):
         # Initialize the Quiz App
         self.root = rootinit
         self.root.title("Quiz App")
@@ -21,6 +22,10 @@ class NormalMode:
         self.num_questions = num_questions
         self.current_question = 0
         self.score = 0
+        self.chosen_set = chosen_set
+
+        # Filter questions based on the chosen set
+        self.qs_for_set = [question for question in quiz_data if question["set_id"] in self.chosen_set]
 
         # Create and display widgets
         self.create_widgets()
@@ -74,12 +79,13 @@ class NormalMode:
 
     def show_question(self):
         # Shuffle the quiz data to get a random order of questions
-        random.shuffle(quiz_data)
-        question = quiz_data[self.current_question]
+        random.shuffle(self.qs_for_set)
+        question = self.qs_for_set[0]
         self.qs_label.config(text=question["question"], justify="center", anchor="center")
 
         # Display choices for the current question
         choices = question["choices"]
+        random.shuffle(choices)
         for j in range(4):
             self.choice_buttons[j].config(text=choices[j], state="normal", background="#ADD8E6")
 
@@ -103,7 +109,8 @@ class NormalMode:
 
     def check_answer(self, choice):
         # Check the selected answer against the correct answer
-        question = quiz_data[self.current_question]
+        question = self.qs_for_set[0]
+        self.qs_for_set.pop(0)
         selected_choice = self.choice_buttons[choice].cget("text")
 
         # Disable all choice buttons
@@ -127,12 +134,13 @@ class NormalMode:
     def next_question(self):
         # Move to the next question or end the quiz
         self.current_question += 1
-        if self.current_question < self.num_questions:
+        if self.current_question < self.num_questions and len(self.qs_for_set) > 0:
             self.show_question()
         else:
-            final_result = "Quiz Completed! Final score: {}/{}".format(self.score, self.num_questions)
+            final_result = "Quiz Completed! Final score: {}/{}".format(self.score, self.current_question)
             self.feedback_label.config(text=final_result, fg="#008000")
             self.next_button.config(state="disabled")
+
 
 if __name__ == "__main__":
     # Create the main Tkinter window and start the app
