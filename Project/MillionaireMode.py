@@ -3,6 +3,7 @@ from tkinter import ttk
 import random
 from quiz_data import quiz_data
 
+
 class MillionaireMode:
     def __init__(self, rootinit, chosen_set):
         # Initialize the Quiz App
