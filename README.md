@@ -7,4 +7,7 @@ so anyone who uses my project can study for the exam which is quickly approachin
 of the quiz. Since I did this project completely alone, I didn't use GitHub much, but I tried my best... I would usually just forget to add changes here because I did it alone.
 
 Overall, I am happy that I made myself go through all of this alone because I managed to learn the basics of Python and I am happy with my project :)
+
+To start the quiz, download the folder Project and just compile the file OpeningScreen.py. 
+
 Kind regards
